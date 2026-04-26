@@ -1,0 +1,51 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user profile and statistics",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "country": { "type": "string" },
+        "university": { "type": "string" },
+        "rank": { "type": "string" },
+        "bestSingle": { "type": "number" },
+        "bestAo5": { "type": "number" },
+        "totalSolves": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid"]
+    },
+    "Solve": {
+      "title": "Solve Record",
+      "description": "A single solve result",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "time": { "type": "number" },
+        "scramble": { "type": "string" },
+        "moves": { "type": "string" },
+        "moveCount": { "type": "number" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "penalty": { "type": "string", "enum": ["none", "+2", "DNF"] }
+      },
+      "required": ["userId", "time", "scramble", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/solves/{solveId}": {
+      "schema": "Solve",
+      "description": "All solve records"
+    },
+    "/leaderboards/global/entries/{userId}": {
+      "schema": "User",
+      "description": "Global leaderboard cache"
+    }
+  }
+}
